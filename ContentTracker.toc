@@ -1,6 +1,6 @@
 ## Interface: 1000002
 ## Title: ContentTracker
-## Notes: Let's you keep track of content you want to do before reset
+## Notes: Let's you keep track of content you want by creating a TODO list
 ## Author: TowelieTrip
 ## Version: 0.0.1
 ## SavedVariable: ContentTrackerDB
@@ -16,3 +16,4 @@ Libs\AceGUI-3.0\AceGUI-3.0.xml
 Libs\AceConfig-3.0\AceConfig-3.0.xml
 
 ContentTracker.lua
+GUI.lua
