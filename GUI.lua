@@ -1,27 +1,30 @@
 INTERNAL = {
-    MAIN = {
-        mainFrame = CreateFrame("Frame", ADDONNAME.."_optionsFrame", UIParent, "BackdropTemplate")
-    },
+    MAIN = {},
     POPUP = {}
 }
 
 --[[ MAIN FRAME ]]
 
 function ContentTracker:BuildUI()
-    INTERNAL["MAIN"]["mainFrame"]:SetPoint("CENTER", -400, 200)
-    INTERNAL["MAIN"]["mainFrame"]:SetSize(750, 500)
-    INTERNAL["MAIN"]["mainFrame"]:SetBackdrop({
+    local x = CreateFrame("Frame", ADDONNAME.."_mainFrame", UIParent, "BackdropTemplate")
+    tinsert(INTERNAL["MAIN"], x)
+    INTERNAL["MAIN"][x:GetName()]:SetPoint("CENTER", -400, 200)
+    INTERNAL["MAIN"][x:GetName()]:SetSize(750, 500)
+    INTERNAL["MAIN"][x:GetName()]:SetBackdrop({
         bgFile = "Interface/AchievementFrame/UI-Achievement-StatsBackground",
         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
         edgeSize = 16
     })
 
     -- status bar
-    Shared_StatusBar(INTERNAL["MAIN"]["mainFrame"], false)
+    Shared_StatusBar(INTERNAL["MAIN"][x:GetName()], false)
     -- new entry button
-    Main_NewEntry(INTERNAL["MAIN"]["mainFrame"])
+    Main_NewEntry(INTERNAL["MAIN"][x:GetName()])
     -- close button
-    Shared_CloseButton(INTERNAL["MAIN"]["mainFrame"])
+    Shared_CloseButton(INTERNAL["MAIN"][x:GetName()])
+
+    -- don't show main frame on creation
+    --internal["MAIN"]["mainFrame"]:Hide() -- debug
 end
 
 function Main_NewEntry(parentFrame)
@@ -43,17 +46,17 @@ end
 
 function ContentTracker:BuildPopUp()
     local x = CreateFrame("Frame", "CT_popupFrame", UIParent, "BackdropTemplate")
-    tinsert(INTERNAL, x)
+    tinsert(INTERNAL["POPUP"], x)
     
     -- parent frame settings
-    INTERNAL["CT_popupFrame"]:SetPoint("CENTER")
-    INTERNAL["CT_popupFrame"]:SetSize(350, 250)
-    INTERNAL["CT_popupFrame"]:SetBackdrop(BACKDROP_TUTORIAL_16_16)
-    INTERNAL["CT_popupFrame"]:EnableMouse(true)
-    INTERNAL["CT_popupFrame"]:SetMovable(true)
-    INTERNAL["CT_popupFrame"]:SetResizable(true)
-    INTERNAL["CT_popupFrame"]:RegisterForDrag("LeftButton")
-    INTERNAL["CT_popupFrame"]:SetResizeBounds(300, 200, 800, 500)
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetPoint("CENTER")
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetSize(350, 250)
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetBackdrop(BACKDROP_TUTORIAL_16_16)
+    INTERNAL["POPUP"]["CT_popupFrame"]:EnableMouse(true)
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetMovable(true)
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetResizable(true)
+    INTERNAL["POPUP"]["CT_popupFrame"]:RegisterForDrag("LeftButton")
+    INTERNAL["POPUP"]["CT_popupFrame"]:SetResizeBounds(300, 200, 800, 500)
 
     -- status bar
     Shared_StatusBar(INTERNAL["CT_popupFrame"], true)
@@ -66,7 +69,7 @@ function ContentTracker:BuildPopUp()
 
 
     -- don't show main frame on creation
-    --internal["mainFrame"]:Hide() -- debug
+    --internal["POPUP"]["mainFrame"]:Hide() -- debug
 end
 
 function PopUp_ResizeButton()
